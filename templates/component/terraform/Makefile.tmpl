@@ -8,7 +8,7 @@ export TF_PLUGIN_CACHE_DIR := {{ .PathToRepoRoot }}/.terraform.d/plugin-cache
 {{if .Providers.AWS}}
 export AWS_PROVIDER_PROFILE := {{ .Providers.AWS.Profile }}
 {{ end }}
-{{if .Providers.Heroku}}
+{{ if .Providers.Heroku.Enabled }}
 export HEROKU_PROVIDER := 1
 {{end}}
 

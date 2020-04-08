@@ -102,9 +102,12 @@ func ResolveAWSProvider(commons ...Common) *AWSProvider {
 
 	if profile != nil || region != nil || version != nil {
 		return &AWSProvider{
+
 			Profile: profile,
 			Region:  region,
-			Version: version,
+			CommonProvider: CommonProvider{
+				Version: version,
+			},
 
 			// optional fields
 			AccountID:         lastNonNilJsonNumber(AWSProviderAccountIdGetter, commons...),
@@ -158,7 +161,9 @@ func ResolveGithubProvider(commons ...Common) *GithubProvider {
 
 		// optional fields
 		BaseURL: lastNonNil(GithubProviderBaseURLGetter, commons...),
-		Version: lastNonNil(GithubProviderVersionGetter, commons...),
+		CommonProvider: CommonProvider{
+			Version: lastNonNil(GithubProviderVersionGetter, commons...),
+		},
 	}
 }
 
@@ -173,7 +178,9 @@ func ResolveSnowflakeProvider(commons ...Common) *SnowflakeProvider {
 			Account: account,
 			Role:    role,
 			Region:  region,
-			Version: version,
+			CommonProvider: CommonProvider{
+				Version: version,
+			},
 		}
 	}
 	return nil
@@ -189,7 +196,9 @@ func ResolveOktaProvider(commons ...Common) *OktaProvider {
 
 	return &OktaProvider{
 		OrgName: orgName,
-		Version: lastNonNil(OktaProviderVersionGetter, commons...),
+		CommonProvider: CommonProvider{
+			Version: lastNonNil(OktaProviderVersionGetter, commons...),
+		},
 	}
 }
 
@@ -206,28 +215,29 @@ func ResolveBlessProvider(commons ...Common) *BlessProvider {
 		AWSProfile: profile,
 		AWSRegion:  region,
 
-		Version:           lastNonNil(BlessProviderVersionGetter, commons...),
+		CommonProvider: CommonProvider{
+			Version: lastNonNil(BlessProviderVersionGetter, commons...),
+		},
 		AdditionalRegions: ResolveOptionalStringSlice(BlessProviderAdditionalRegionsGetter, commons...),
 	}
 }
 
 func ResolveHerokuProvider(commons ...Common) *HerokuProvider {
-	var p *HerokuProvider
+	enabled := false
+	var version *string
 	for _, c := range commons {
-		if c.Providers == nil || c.Providers.Heroku == nil {
-			continue
+		if c.Providers != nil && c.Providers.Heroku != nil && c.Providers.Heroku.Enabled != nil {
+			enabled = *c.Providers.Heroku.Enabled
 		}
-		p = c.Providers.Heroku
 	}
 
 	version := lastNonNil(HerokuProviderVersionGetter, commons...)
 
-	if version != nil {
-		return &HerokuProvider{
+	return &HerokuProvider{
+		CommonProvider: CommonProvider{
+			Enabled: &enabled,
 			Version: version,
-		}
-	} else {
-		return p
+		},
 	}
 }
 
@@ -244,7 +254,9 @@ func ResolveDatadogProvider(commons ...Common) *DatadogProvider {
 
 	if version != nil {
 		return &DatadogProvider{
-			Version: version,
+			CommonProvider: CommonProvider{
+				Version: version,
+			},
 		}
 	} else {
 		return p

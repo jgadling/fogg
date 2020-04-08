@@ -103,50 +103,60 @@ type Providers struct {
 	Datadog   *DatadogProvider   `yaml:"datadog,omitempty"`
 }
 
+type CommonProvider struct {
+	Enabled *bool   `yaml:"enabled,omitempty"`
+	Version *string `yaml:"version,omitempty"`
+}
+
 // OktaProvider is an okta provider
 type OktaProvider struct {
+	CommonProvider `yaml:",inline"`
+
 	// the okta provider is optional (above) but if supplied you must set an OrgName
 	OrgName *string `yaml:"org_name,omitempty"`
-	Version *string `yaml:"version,omitempty"`
 }
 
 // BlessProvider allows for terraform-provider-bless configuration
 type BlessProvider struct {
+	CommonProvider `yaml:",inline"`
+
 	// the bless provider is optional (above) but if supplied you must set a region and aws_profile
 	AdditionalRegions []string `yaml:"additional_regions,omitempty"`
 	AWSProfile        *string  `yaml:"aws_profile,omitempty"`
 	AWSRegion         *string  `yaml:"aws_region,omitempty"`
-	Version           *string  `yaml:"version,omitempty"`
 }
 
 type AWSProvider struct {
+	CommonProvider `yaml:",inline"`
+
 	// the aws provider is optional (above) but if supplied you must set account id and region
 	AccountID         *json.Number `yaml:"account_id,omitempty"`
 	AdditionalRegions []string     `yaml:"additional_regions,omitempty"`
 	Profile           *string      `yaml:"profile,omitempty"`
 	Region            *string      `yaml:"region,omitempty"`
-	Version           *string      `yaml:"version,omitempty"`
 }
 
 type GithubProvider struct {
+	CommonProvider `yaml:",inline"`
+
 	Organization *string `yaml:"organization,omitempty"`
 	BaseURL      *string `yaml:"base_url,omitempty"`
-	Version      *string `yaml:"version,omitempty"`
 }
 
 type SnowflakeProvider struct {
+	CommonProvider `yaml:",inline"`
+
 	Account *string `yaml:"account,omitempty"`
 	Role    *string `yaml:"role,omitempty"`
 	Region  *string `yaml:"region,omitempty"`
-	Version *string `yaml:"version,omitempty"`
 }
 
 type HerokuProvider struct {
-	Version *string `yaml:"version,omitempty"`
+	CommonProvider `yaml:",inline"`
 }
 
 type DatadogProvider struct {
-	Version *string `yaml:"version,omitempty"`
+	CommonProvider `yaml:",inline"`
 }
 
 //Backend is used to configure a terraform backend

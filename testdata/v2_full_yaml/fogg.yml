@@ -28,7 +28,8 @@ envs:
     components:
       hero:
         providers:
-          heroku: {}
+          heroku:
+            enabled: true
       datadog:
         providers:
           datadog: {}

@@ -159,6 +159,7 @@ type BlessProvider struct {
 }
 
 type HerokuProvider struct {
+	Enabled bool    `yaml:"enabled,omitempty"`
 	Version *string `yaml:"version,omitempty"`
 }
 
@@ -485,10 +486,9 @@ func resolveComponentCommon(commons ...v2.Common) ComponentCommon {
 
 	var herokuPlan *HerokuProvider
 	herokuConfig := v2.ResolveHerokuProvider(commons...)
-	if herokuConfig != nil {
-		herokuPlan = &HerokuProvider{
-			Version: herokuConfig.Version,
-		}
+	herokuPlan = &HerokuProvider{
+		Enabled: *herokuConfig.Enabled,
+		Version: herokuConfig.Version,
 	}
 
 	var datadogPlan *DatadogProvider

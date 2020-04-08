@@ -35,7 +35,9 @@ func InitConfig(project, region, bucket, table, awsProfile, owner, awsProviderVe
 					AWS: &v2.AWSProvider{
 						Profile: &awsProfile,
 						Region:  &region,
-						Version: &awsProviderVersion,
+						CommonProvider: v2.CommonProvider{
+							Version: &awsProviderVersion,
+						},
 					},
 				},
 				TerraformVersion: util.StrPtr(defaultTerraformVersion.String()),

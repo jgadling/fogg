@@ -39,7 +39,7 @@
   {{ template "github_provider" .Providers.Github}}
 {{ end }}
 
-{{ if .Providers.Heroku }}
+{{ if .Providers.Heroku.Enabled }}
   {{ template "heroku_provider" .Providers.Heroku }}
 {{ end }}
 

@@ -7,8 +7,6 @@ export TF_PLUGIN_CACHE_DIR := ../../../..//.terraform.d/plugin-cache
 export AWS_BACKEND_PROFILE := foo
 
 
-export HEROKU_PROVIDER := 1
-
 
 include ../../../..//scripts/component.mk
 

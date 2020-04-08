@@ -56,7 +56,9 @@ func (c *Config) Generate(r *rand.Rand, size int) reflect.Value {
 			return nil
 		}
 		return &OktaProvider{
-			Version: randStringPtr(r, s),
+			CommonProvider: CommonProvider{
+				Version: randStringPtr(r, s),
+			},
 			OrgName: randStringPtr(r, s),
 		}
 	}
@@ -66,7 +68,9 @@ func (c *Config) Generate(r *rand.Rand, size int) reflect.Value {
 			return nil
 		}
 		return &BlessProvider{
-			Version:           randStringPtr(r, s),
+			CommonProvider: CommonProvider{
+				Version: randStringPtr(r, s),
+			},
 			AWSRegion:         randStringPtr(r, s),
 			AWSProfile:        randStringPtr(r, s),
 			AdditionalRegions: []string{randString(r, s)},
@@ -80,7 +84,9 @@ func (c *Config) Generate(r *rand.Rand, size int) reflect.Value {
 				AccountID: &accountID,
 				Region:    randStringPtr(r, s),
 				Profile:   randStringPtr(r, s),
-				Version:   randStringPtr(r, s),
+				CommonProvider: CommonProvider{
+					Version: randStringPtr(r, s),
+				},
 			}
 		}
 		return nil
