@@ -33,6 +33,7 @@ func TestIntegration(t *testing.T) {
 		{"github_actions"},
 		{"circleci"},
 		{"component_kind"},
+		{"heroku_provider_yaml"},
 	}
 
 	for _, tc := range testCases {
